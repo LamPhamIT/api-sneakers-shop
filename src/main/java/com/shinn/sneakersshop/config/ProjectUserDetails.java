@@ -13,6 +13,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class ProjectUserDetails implements UserDetailsService {
@@ -26,14 +27,14 @@ public class ProjectUserDetails implements UserDetailsService {
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         String userName, password = null;
         List<GrantedAuthority> authorities = null;
-        List<Users> users = usersRepository.findByUsername(username);
-        if(users.isEmpty()) {
+        Optional<Users> users = usersRepository.findByUsername(username);
+        if(!users.isEmpty()) {
             throw new UsernameNotFoundException("User details not found for user: " + username);
         } else {
-            userName = users.get(0).getUsername();
-            password = users.get(0).getPassword();
+            userName = users.get().getUsername();
+            password = users.get().getPassword();
             authorities = new ArrayList<>();
-            for(Role role :  users.get(0).getRoles()) {
+            for(Role role :  users.get().getRoles()) {
                 authorities.add(new SimpleGrantedAuthority("ROLE_" + role.getName().name()));
             }
         }
