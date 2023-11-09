@@ -28,7 +28,7 @@ public class ProjectUserDetails implements UserDetailsService {
         String userName, password = null;
         List<GrantedAuthority> authorities = null;
         Optional<Users> users = usersRepository.findByUsername(username);
-        if(!users.isEmpty()) {
+        if(users.isEmpty()) {
             throw new UsernameNotFoundException("User details not found for user: " + username);
         } else {
             userName = users.get().getUsername();

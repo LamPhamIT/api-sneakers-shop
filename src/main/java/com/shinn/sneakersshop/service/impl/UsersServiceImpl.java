@@ -25,7 +25,7 @@ public class UsersServiceImpl implements UsersService {
     @Override
     public UsersDto findByUsername(String username) {
         Optional<Users> users = usersRepository.findByUsername(username);
-        if(!users.isPresent()) throw new ResourceNotFoundException("User", "username", username);
+        if(!users.isEmpty()) throw new ResourceNotFoundException("User", "username", username);
         return converter.toDto(users.get());
     }
 }
