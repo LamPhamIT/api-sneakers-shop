@@ -8,7 +8,7 @@ import org.springframework.data.annotation.LastModifiedDate;
 import java.util.Date;
 
 @MappedSuperclass
-public abstract class BaseEntity {
+public abstract class Base {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -29,10 +29,10 @@ public abstract class BaseEntity {
     @LastModifiedBy
     private String lastModifiedBy;
 
-    public BaseEntity() {
+    public Base() {
     }
 
-    public BaseEntity(Long id, Date createDate, String createBy, Date lastModifiedDate, String lastModifiedBy) {
+    public Base(Long id, Date createDate, String createBy, Date lastModifiedDate, String lastModifiedBy) {
         this.id = id;
         this.createDate = createDate;
         this.createBy = createBy;

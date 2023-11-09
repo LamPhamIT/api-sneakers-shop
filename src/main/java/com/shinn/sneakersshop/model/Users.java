@@ -1,6 +1,5 @@
 package com.shinn.sneakersshop.model;
 
-import io.micrometer.core.annotation.Counted;
 import jakarta.persistence.*;
 
 import java.util.ArrayList;
@@ -9,7 +8,7 @@ import java.util.List;
 
 @Entity
 @Table(name="User")
-public class Users extends BaseEntity{
+public class Users extends Base {
     @Column(nullable = false, unique = true)
     private String username;
 

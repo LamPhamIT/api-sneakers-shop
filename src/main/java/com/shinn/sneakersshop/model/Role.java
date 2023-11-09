@@ -8,7 +8,7 @@ import java.util.List;
 
 @Entity
 @Table(name="Role")
-public class Role extends BaseEntity{
+public class Role extends Base {
     @Column
     private String code;
 
