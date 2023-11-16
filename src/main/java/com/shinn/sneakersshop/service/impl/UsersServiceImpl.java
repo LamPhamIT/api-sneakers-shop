@@ -11,6 +11,7 @@ import com.shinn.sneakersshop.repository.UsersRepository;
 import com.shinn.sneakersshop.service.UsersService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -23,24 +24,28 @@ public class UsersServiceImpl implements UsersService {
     private final Converter<Users, UsersDto> converter;
     private final UsersRepository usersRepository;
     private final RoleRepository roleRepository;
+    private final PasswordEncoder passwordEncoder;
 
     @Autowired
-    private UsersServiceImpl(@Qualifier("usersConverter") Converter<Users, UsersDto> converter, UsersRepository usersRepository, RoleRepository roleRepository) {
+    private UsersServiceImpl(@Qualifier("usersConverter") Converter<Users, UsersDto> converter, UsersRepository usersRepository, RoleRepository roleRepository, PasswordEncoder passwordEncoder) {
         this.converter = converter;
         this.usersRepository = usersRepository;
         this.roleRepository = roleRepository;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @Override
     public UsersDto findByUsername(String username) {
         Optional<Users> users = usersRepository.findByUsername(username);
-        if (!users.isEmpty()) throw new ResourceNotFoundException("User", "username", username);
+        if (!users.isPresent()) throw new ResourceNotFoundException("User", "username", username);
         return converter.toDto(users.get());
     }
 
     @Override
     public UsersDto save(UsersDto usersDto) {
         Users saveUser = converter.toEntity(usersDto);
+        String hashedEncoded = passwordEncoder.encode(saveUser.getPassword());
+        saveUser.setPassword(hashedEncoded);
         List<Role> roles = new ArrayList<>();
         for(Role role : saveUser.getRoles()) {
             Optional<Role> fullFieldRole = roleRepository.findByCodeOrName(role.getCode(), role.getName());

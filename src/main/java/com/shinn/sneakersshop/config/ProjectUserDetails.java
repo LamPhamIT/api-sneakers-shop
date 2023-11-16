@@ -15,11 +15,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-@Service
+//@Service                   // Disabled
 public class ProjectUserDetails implements UserDetailsService {
 
     private final UsersRepository usersRepository;
-    @Autowired
+//    @Autowired
     public ProjectUserDetails(UsersRepository usersRepository) {
         this.usersRepository = usersRepository;
     }
