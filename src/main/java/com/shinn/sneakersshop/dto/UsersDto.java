@@ -16,6 +16,10 @@ public class UsersDto extends BaseDto {
     @NotEmpty
     private String password;
 
+    @NotNull
+    @NotEmpty
+    private String fullname;
+
     @Email
     @NotNull
     @NotEmpty
@@ -34,6 +38,7 @@ public class UsersDto extends BaseDto {
                     String lastModifiedBy,
                     String username,
                     String password,
+                    String fullname,
                     String activedEmail,
                     List<RoleDto> roles) {
         super(id, createdDate, createdBy, lastModifiedDate, lastModifiedBy);
@@ -41,6 +46,7 @@ public class UsersDto extends BaseDto {
         this.password = password;
         this.activedEmail = activedEmail;
         this.roles = roles;
+        this.fullname = fullname;
     }
 
     public String getUsername() {
@@ -74,4 +80,13 @@ public class UsersDto extends BaseDto {
     public void setRoles(List<RoleDto> roles) {
         this.roles = roles;
     }
+
+    public String getFullname() {
+        return fullname;
+    }
+
+    public void setFullname(String fullname) {
+        this.fullname = fullname;
+    }
 }
+

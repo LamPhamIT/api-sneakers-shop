@@ -24,6 +24,17 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
     }
 
+    @ExceptionHandler(InvalidDataSentException.class)
+    public ResponseEntity<ErrorDto> handleInvalidDataSentExeption(InvalidDataSentException exception, WebRequest webRequest) {
+        ErrorDto error = new ErrorDto(
+                LocalDateTime.now(),
+                exception.getMessage(),
+                webRequest.getDescription(false),
+                "INVALID_DATA_INPUT"
+        );
+        return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
+    }
+
     @ExceptionHandler(Exception.class)
     public ResponseEntity<ErrorDto> handleGlobalException(Exception exception, WebRequest webRequest) {
         ErrorDto error = new ErrorDto(

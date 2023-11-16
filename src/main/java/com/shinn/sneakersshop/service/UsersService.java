@@ -4,4 +4,5 @@ import com.shinn.sneakersshop.dto.UsersDto;
 
 public interface UsersService {
     public UsersDto findByUsername(String username);
+    public UsersDto save(UsersDto usersDto);
 }
