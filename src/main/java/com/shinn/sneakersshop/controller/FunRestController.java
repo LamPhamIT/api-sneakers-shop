@@ -5,8 +5,14 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class FunRestController {
-    @GetMapping("/hello")
-    public String sayHello() {
-        return "Hello world";
+    @GetMapping("/sayHelloAdmin")
+    public String sayHelloAdmin() {
+        return "Hello Admin";
     }
+
+    @GetMapping("/sayHelloUser")
+    public String sayHelloUser() {
+        return "Hello User";
+    }
+
 }

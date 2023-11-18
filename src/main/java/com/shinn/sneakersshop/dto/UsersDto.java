@@ -1,5 +1,7 @@
 package com.shinn.sneakersshop.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
@@ -14,6 +16,7 @@ public class UsersDto extends BaseDto {
 
     @NotNull
     @NotEmpty
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String password;
 
     @NotNull
@@ -26,6 +29,7 @@ public class UsersDto extends BaseDto {
     private String activedEmail;
 
     @NotEmpty
+    @JsonIgnore
     private List<RoleDto> roles;
 
     public UsersDto() {

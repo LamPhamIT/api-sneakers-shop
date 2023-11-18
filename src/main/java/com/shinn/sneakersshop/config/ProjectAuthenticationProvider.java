@@ -39,7 +39,7 @@ public class ProjectAuthenticationProvider implements AuthenticationProvider {
             if(passwordEncoder.matches(password, usersDto.getPassword())) {
                 List<GrantedAuthority> authorities = new ArrayList<>();
                 for(RoleDto role :usersDto.getRoles()) {
-                  authorities.add(new SimpleGrantedAuthority(role.getName().name()));
+                  authorities.add(new SimpleGrantedAuthority("ROLE_" + role.getName().name()));
                 }
                 return new UsernamePasswordAuthenticationToken(username, password, authorities);
             } else {
