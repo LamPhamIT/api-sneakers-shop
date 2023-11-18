@@ -1,8 +1,8 @@
 package com.shinn.sneakersshop.config;
 
+import com.shinn.sneakersshop.constant.SystemConstant;
 import com.shinn.sneakersshop.dto.RoleDto;
 import com.shinn.sneakersshop.dto.UsersDto;
-import com.shinn.sneakersshop.model.Role;
 import com.shinn.sneakersshop.service.UsersService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationProvider;
@@ -38,8 +38,8 @@ public class ProjectAuthenticationProvider implements AuthenticationProvider {
         if(usersDto.getId() != null) {
             if(passwordEncoder.matches(password, usersDto.getPassword())) {
                 List<GrantedAuthority> authorities = new ArrayList<>();
-                for(RoleDto role :usersDto.getRoles()) {
-                  authorities.add(new SimpleGrantedAuthority("ROLE_" + role.getName().name()));
+                for(RoleDto role : usersDto.getRoles()) {
+                  authorities.add(new SimpleGrantedAuthority(SystemConstant.ROLE_PRE + role.getName().name()));
                 }
                 return new UsernamePasswordAuthenticationToken(username, password, authorities);
             } else {

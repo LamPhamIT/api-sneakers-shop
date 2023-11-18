@@ -15,4 +15,9 @@ public class FunRestController {
         return "Hello User";
     }
 
+    @GetMapping("/sayHello")
+    public String sayHello() {
+        return "Hello ";
+    }
+
 }
