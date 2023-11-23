@@ -28,8 +28,8 @@ public class SecurityConfig {
     SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         CsrfTokenRequestAttributeHandler requestHandler = new CsrfTokenRequestAttributeHandler();
         requestHandler.setCsrfRequestAttributeName("_csrf");
-        http
-                .sessionManagement(sessionManagement -> sessionManagement.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+        http.securityContext((context) -> context.requireExplicitSave(false))
+                .sessionManagement(sessionManagement -> sessionManagement.sessionCreationPolicy(SessionCreationPolicy.ALWAYS))
                 .cors(cors -> cors.configurationSource(new CorsConfigurationSource() {
                     @Override
                     public CorsConfiguration getCorsConfiguration(HttpServletRequest request) {
@@ -46,8 +46,8 @@ public class SecurityConfig {
                 .csrf(csrf -> csrf.csrfTokenRequestHandler(requestHandler).ignoringRequestMatchers("/register")
                         .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse()))
                 .addFilterAfter(new CsrfCookieFilter(), BasicAuthenticationFilter.class)
-                .addFilterAfter(new JWTGeneratorFilter(), BasicAuthenticationFilter.class)
-                .addFilterBefore(new JWTValidatorFilter(), BasicAuthenticationFilter.class)
+//                .addFilterAfter(new JWTGeneratorFilter(), BasicAuthenticationFilter.class)
+//                .addFilterBefore(new JWTValidatorFilter(), BasicAuthenticationFilter.class)
                 .authorizeHttpRequests(requests -> requests
                         .requestMatchers("/sayHelloAdmin").hasRole("ADMIN")
                         .requestMatchers("/sayHelloUser").hasAnyRole("USER", "ADMIN")
