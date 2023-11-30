@@ -17,7 +17,7 @@ public class Role extends Base {
     private ERole name;
 
     @ManyToMany(mappedBy = "roles")
-    private List<Users> user = new ArrayList<>();
+    private List<Users> user;
 
     public Role() {
     }
